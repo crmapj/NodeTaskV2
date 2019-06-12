@@ -41,9 +41,10 @@ router.get('/tasks/:id', async (req, res) => {
     }
 })
 
+
+// Endpoint for updating singular task
 router.patch('/tasks/:id', async (req, res) => {
     const _id = req.params.id
-    console.log(_id);
     
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
@@ -69,6 +70,7 @@ router.patch('/tasks/:id', async (req, res) => {
     
 })
 
+// endpoint for deleting tasks
 router.delete('/tasks/:id', async (req, res) => {
     try {
         const task = await Task.findByIdAndDelete(req.params.id)

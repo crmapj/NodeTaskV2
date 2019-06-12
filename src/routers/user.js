@@ -41,6 +41,7 @@ router.get('/users/:id', async (req, res) => {
     }
 })
 
+// Endpoint for updating users
 router.patch('/users/:id', async (req, res) => {
     const _id = req.params.id
     const updates = Object.keys(req.body)
@@ -52,7 +53,12 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+        const user = await User.findById(req.params.id)
+
+        updates.forEach(() => user[updates] = req.body[updates])
+        await user.save()
+
+        // const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
 
         if (!user) {
             return res.status(404).send()
@@ -67,6 +73,7 @@ router.patch('/users/:id', async (req, res) => {
 
 })
 
+// Endpoint for deleting users
 router.delete('/users/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id)
