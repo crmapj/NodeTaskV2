@@ -5,12 +5,12 @@ const Task = require('../models/task')
 // Endpoint to create new task
 router.post('/tasks', async (req, res) => {
     const task = new Task(req.body)
-
+    console.log("hello")
     try {
-        const task = await task.save()
+        await task.save()
         res.status(201).send(task)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send(e)
     }
 
 })
