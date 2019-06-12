@@ -55,7 +55,7 @@ router.patch('/users/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
-        updates.forEach(() => user[updates] = req.body[updates])
+        updates.forEach((update) => user[update] = req.body[update])
         await user.save()
 
         // const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
@@ -88,6 +88,17 @@ router.delete('/users/:id', async (req, res) => {
     }
 
 
+})
+
+// logging a user in
+router.post('/users/login', async (req, res) => {
+    try{
+        
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        res.send(user)
+    } catch (e) {
+        res.status(400).send()
+    }
 })
 
 module.exports = router
